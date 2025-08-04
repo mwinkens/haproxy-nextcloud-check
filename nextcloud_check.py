@@ -12,12 +12,15 @@ def check() -> int:
     """
     # Get the token from an environment variable
     token = os.getenv("NC_TOKEN")
+    server_url = os.getenv("NC_URL")
     if not token:
         raise ValueError(
             "You need to set your nextcloud monitoring token in order to use this check"
         )
+    if not server_url:
+        raise ValueError("Please set your server URL")
 
-    url = "http://127.0.0.1/ocs/v2.php/apps/serverinfo/api/v1/info?format=json"
+    url = f"{server_url}/ocs/v2.php/apps/serverinfo/api/v1/info?format=json"
 
     headers = {"NC-token": token}
 
